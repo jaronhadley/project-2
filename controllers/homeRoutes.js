@@ -1,9 +1,5 @@
 const router = require('express').Router();
-<<<<<<< HEAD
-const { Post, User, Comment, Vote } = require('../models');
-=======
-const { Post, User, Comment, Tag, PostTag } = require('../models');
->>>>>>> 78cd080610202f6a26f14f14f41aa7c749e0f717
+const { Post, User, Comment, Tag, PostTag, Vote} = require('../models');
 const withAuth = require('../utils/auth');
 const sequelize = require('../config/connection');
 const { QueryTypes } = require('sequelize');
@@ -12,15 +8,12 @@ router.get('/', async (req, res) => {
   try {
     // Get all posts and JOIN with user data
     const postData = await Post.findAll({
-<<<<<<< HEAD
       attributes: [
         'id',
         'title',
         'contents',
         [sequelize.literal('(SELECT COUNT(*) FROM vote WHERE post.id = vote.post_id)'), 'vote_count']
       ],
-=======
->>>>>>> 78cd080610202f6a26f14f14f41aa7c749e0f717
       include: [
         {
           model: User,
@@ -48,7 +41,6 @@ router.get('/', async (req, res) => {
     res.status(500).json(err);
   }
 });
-<<<<<<< HEAD
 // for upvoted posts
 router.get('/recommended', async (req, res) => {
   try {
@@ -88,21 +80,16 @@ router.get('/recommended', async (req, res) => {
     res.status(500).json(err);
   }
 });
-=======
->>>>>>> 78cd080610202f6a26f14f14f41aa7c749e0f717
 // render specific post
 router.get('/post/:id', withAuth, async (req, res) => {
   try {
     const postData = await Post.findByPk(req.params.id, {
-<<<<<<< HEAD
       attributes: [
         'id',
         'title',
         'contents',
         [sequelize.literal('(SELECT COUNT(*) FROM vote WHERE post.id = vote.post_id)'), 'vote_count']
       ],
-=======
->>>>>>> 78cd080610202f6a26f14f14f41aa7c749e0f717
       include: [
         {
           model: User,
@@ -110,14 +97,11 @@ router.get('/post/:id', withAuth, async (req, res) => {
         {
           model: Comment,
         },
-<<<<<<< HEAD
-=======
         {
           model: Tag,
           through: PostTag,
           as: 'post_tags'
         },
->>>>>>> 78cd080610202f6a26f14f14f41aa7c749e0f717
       ],
     });
 
@@ -136,11 +120,7 @@ router.get('/dashboard', withAuth, async (req, res) => {
   try {
     const userData = await User.findByPk(req.session.user_id, {
       attributes: { exclude: ['password'] },
-<<<<<<< HEAD
       include: [{ model: Post }, { model: Comment }] [{ model: Vote}],
-=======
-      include: [{ model: Post }, { model: Comment }],
->>>>>>> 78cd080610202f6a26f14f14f41aa7c749e0f717
     });
 
     const user = userData.get({ plain: true });
@@ -169,22 +149,16 @@ router.get('/post/update/:id', withAuth, async (req, res) => {
       include: [
         {
           model: User,
-<<<<<<< HEAD
           attributes: ['name'],
-=======
->>>>>>> 78cd080610202f6a26f14f14f41aa7c749e0f717
         },
         {
           model: Comment,
         },
-<<<<<<< HEAD
-=======
         {
           model: Tag,
           through: PostTag,
           as: 'post_tags'
         },
->>>>>>> 78cd080610202f6a26f14f14f41aa7c749e0f717
       ],
     });
 
