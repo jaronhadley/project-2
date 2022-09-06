@@ -21,5 +21,41 @@ const updatePost = async (event) => {
     }
   }
 };
+// add tag
+const addTag = async (event) => {
+  event.preventDefault();
+  event.stopPropagation();
+  const post_id = window.location.pathname.split('/')[3];
+  const tag_name = document.querySelector('#tag').value.trim();
 
+  if(tag_name){
+    const response = await fetch('/api/tags/',{
+      method:'POST',
+      body: JSON.stringify({ tag_name, post_id }),
+      headers: {
+        'Content-Type': 'application/json',
+      },
+    });
+    if (response.ok) {
+      document.location.replace(`/post/update/${post_id}`);
+    } else {
+      alert('Failed to add tag');
+    }
+  }
+};
+// delete tag
+const deleteTag = async (event) => {
+  const post_id = window.location.pathname.split('/')[3];
+  const tag_id = event.target.getAttribute('data-id');
+  const response = await fetch(`/api/tags/${post_id}/${tag_id}`,{
+    method:'DELETE',
+  });
+  if (response.ok) {
+    document.location.replace(`/post/update/${post_id}`);
+  } else {
+    alert('Failed to delete post');
+  }
+};
 document.querySelector('.new-post-form').addEventListener('submit', updatePost);
+document.querySelector('.tag-form').addEventListener('click', addTag);
+document.querySelector('.tag-delete').addEventListener('click', deleteTag);
