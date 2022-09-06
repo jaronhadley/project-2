@@ -23,6 +23,11 @@ module.exports = {
       return '<span for="img" aria-label="laptop">💻</span>';
     } else {
       return '<span for="img" aria-label="gear">⚙️</span>';
+      return `<span for="img" aria-label="lightbulb">💡</span>`;
+    } else if (randomNum > 0.4) {
+      return `<span for="img" aria-label="laptop">💻</span>`;
+    } else {
+      return `<span for="img" aria-label="gear">⚙️</span>`;
     }
   },
   // allows handlebars to if the session user matches the post or comment user
