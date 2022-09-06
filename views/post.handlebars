@@ -8,6 +8,19 @@
         <p>Created by {{user.name}} on {{format_date date_created}}</p>
       </div>
     </div>
+    {{#if post_tags}}
+    <div class="row card-header">
+      <div class="m-1">
+        Tags: &nbsp
+      </div>   
+      {{#each post_tags as |tag|}}
+      <div class="btn btn-squared btn-sm">
+        {{tag.tag_name}}
+      </div>
+      <div>&nbsp</div>
+      {{/each}}
+    </div>
+    {{/if}}
     <div class="card-body">
       <p>{{contents}}</p>
     </div>

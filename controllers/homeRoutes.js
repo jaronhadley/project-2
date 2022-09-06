@@ -1,5 +1,5 @@
 const router = require('express').Router();
-const { Post, User, Comment } = require('../models');
+const { Post, User, Comment, Tag, PostTag } = require('../models');
 const withAuth = require('../utils/auth');
 const sequelize = require('../config/connection');
 const { QueryTypes } = require('sequelize');
@@ -45,6 +45,11 @@ router.get('/post/:id', withAuth, async (req, res) => {
         },
         {
           model: Comment,
+        },
+        {
+          model: Tag,
+          through: PostTag,
+          as: 'post_tags'
         },
       ],
     });
@@ -93,10 +98,14 @@ router.get('/post/update/:id', withAuth, async (req, res) => {
       include: [
         {
           model: User,
-          attributes: ['name'],
         },
         {
           model: Comment,
+        },
+        {
+          model: Tag,
+          through: PostTag,
+          as: 'post_tags'
         },
       ],
     });
