@@ -1,20 +1,15 @@
 <!-- Loop over each object in the projects array -->
-{{#each posts as |post|}}
-  <div class='row mb-4 project'>
-    <div class='col-md-12 card'>
-      <div class='row card-header'>
-        <div class='col-md-8'>
-          <h2>
-            <a href='/post/{{post.id}}'>{{post.title}}</a>
-          </h2>
-        </div>
-        <div class='col-md-4 text-right mt-3'>
-          Created by
-          {{post.user.name}}
-          on
-          {{format_date post.date_created}}
-          
-        </div>
+{{#each posts as |post| }}
+<div class="row mb-4 project">
+  <div class="col-md-12 card">
+    <div class="row card-header">
+      <div class="col-md-8">
+        <h2>
+          <a href="/post/{{post.id}}">{{post.title}}</a>
+        </h2>
+      </div>
+      <div class="col-md-4 text-right mt-3">
+        Created by <a href="/profile/{{post.user.name}}">{{post.user.name}}</a> on {{format_date post.date_created}}
       </div>
       <p class='card-body'>{{post.contents}}</p>
       <div class='row card-footer'>

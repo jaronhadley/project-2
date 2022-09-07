@@ -35,6 +35,14 @@ User.init(
         len: [8],
       },
     },
+    picture: {
+      type: DataTypes.STRING,
+      allowNull: true,
+    },
+    biography: {
+      type: DataTypes.TEXT('long'),
+      allowNull: true,
+    }
   },
   {
     hooks: {

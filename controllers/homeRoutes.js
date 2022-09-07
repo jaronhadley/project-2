@@ -172,5 +172,50 @@ router.get('/post/update/:id', withAuth, async (req, res) => {
     res.status(500).json(err);
   }
 });
+// render profile page of specific user
+router.get('/profile/:name', withAuth, async (req, res) => {
+  try {
+    const userData = await User.findOne(
+      {
+        where: {name: req.params.name},
+        attributes: { exclude: ['password']},
+        include: [
+          {
+            model: Post,
+          },
+          {
+            model: Comment,
+          },
+        ],
+    });
+
+    const user = userData.get({ plain: true });
+    console.log(user);
+    res.render('profile', {
+      ...user,
+      logged_in: req.session.logged_in,
+      logged_id: req.session.user_id
+    });
+  } catch (err) {
+    res.status(500).json(err);
+  }
+});
+// render user's personal profile update page 
+router.get('/dashboard_update/:id', withAuth, async (req, res) => {
+  try {
+    const userData = await User.findByPk(req.params.id, {
+      attributes: { exclude: ['password']},
+    });
+
+    const user = userData.get({ plain: true });
+    res.render('dashboard_update', {
+      ...user,
+      logged_in: req.session.logged_in,
+      logged_id: req.session.user_id
+    });
+  } catch (err) {
+    res.status(500).json(err);
+  }
+});
 
 module.exports = router;
