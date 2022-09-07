@@ -5,7 +5,7 @@
         <h2>{{title}}</h2>
       </div>
       <div class="col-md-4 text-right mt-3">
-        <p>Created by {{user.name}} on {{format_date date_created}}</p>
+        <p>Created by <a href="/profile/{{user.name}}">{{user.name}}</a> on {{format_date date_created}}</p>
       </div>
     </div>
     <div class="card-body">
@@ -20,7 +20,7 @@
     <div class="col-md-2"></div>
     <div class="col-md-8 card">
       <div class="card-header text-right">
-        {{comment.user_name}} on {{format_date comment.date_created}}
+        <a href="/profile/{{comment.user.name}}">{{comment.user_name}}</a> on {{format_date comment.date_created}}
       </div>
       <div class="card-body">
         {{comment.contents}}
