@@ -38,21 +38,17 @@ router.post('/', async (req, res) => {
   const newName = req.body.tag_name;
   const postId = req.body.post_id;
   try {
-    var found = 0;
     // search all tags for same
-    const allData = await Tag.findAll();
-    allData.forEach((tag) => {
-      if(newName.toLowerCase().trim()===tag.tag_name){
-        // if found get id and assign posttag
-        const ptData = PostTag.create({
-          tag_id: tag.id,
-          post_id: postId
-        });
-        res.status(200).json(ptData);
-        found++;
-      }
-    });
-    if(found===0) {
+    const allData = await Tag.findAll({where:{tag_name: newName.toLowerCase().trim()}});
+    if(allData.length>0){
+      // if found get id and assign posttag
+      const ptData = PostTag.create({
+        tag_id: allData[0].dataValues.id,
+        post_id: postId
+      });
+      res.status(200).json(ptData);
+    }
+    else {
       // if not found create new tag and assign posttag
       const tagData = await Tag.create(req.body);
       const ptData = await PostTag.create({
