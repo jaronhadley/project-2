@@ -2,12 +2,30 @@
   <form class="new-post-form">  
     <div class="col-md-12 card">
         <div class="row card-header">
-        <div class="col-md-8">
-            <h2><input class="form-input" type="text" id="post-title" name="post-title" placeholder={{title}}></input></h2>
+            <div class="col-md-8">
+                <h2><input class="form-input" type="text" id="post-title" name="post-title" placeholder={{title}}></input></h2>
+            </div>
+            <div class="col-md-4 text-right mt-3">
+                <p>Created by {{user.name}} on {{format_date date_created}}</p>
+            </div>
         </div>
-        <div class="col-md-4 text-right mt-3">
-            <p>Created by {{user.name}} on {{format_date date_created}}</p>
-        </div>
+        <div class="row card-header tag-delete">
+        {{#if post_tags}}
+            <div>
+                Tags: &nbsp
+            </div>   
+        {{#each post_tags as |tag|}}
+            <div class="btn btn-squared btn-sm" data-id="{{tag.id}}" >
+                {{tag.tag_name}}  (x)
+            </div>
+            <div>&nbsp</div>
+        {{/each}}
+        {{/if}}
+            <div class="tag-form">
+                <label for="tag">Add Tag: &nbsp</label>
+                <input type="text" id="tag" name="tag">
+                <button class="btn btn-sm">Add Tag</button>
+            </div>
         </div>
         <div class="card-body">
             <label for="post-cont"></label>

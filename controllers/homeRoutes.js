@@ -1,9 +1,8 @@
 const router = require('express').Router();
-const { Post, User, Comment } = require('../models');
+const { Post, User, Comment, Tag, PostTag } = require('../models');
 const withAuth = require('../utils/auth');
 const sequelize = require('../config/connection');
 const { QueryTypes } = require('sequelize');
-
 
 router.get('/', async (req, res) => {
   try {
@@ -22,15 +21,15 @@ router.get('/', async (req, res) => {
 
     // Serialize data so the template can read it
     const posts = postData.map((post) => post.get({ plain: true }));
-    posts.forEach(post => {
-      if(post.contents.length > 450){
-        post.contents = post.contents.slice(0,450) + ' ...'
+    posts.forEach((post) => {
+      if (post.contents.length > 450) {
+        post.contents = post.contents.slice(0, 450) + ' ...';
       }
     });
     // Pass serialized data and session flag into template
-    res.render('homepage', { 
-      posts, 
-      logged_in: req.session.logged_in 
+    res.render('homepage', {
+      posts,
+      logged_in: req.session.logged_in,
     });
   } catch (err) {
     res.status(500).json(err);
@@ -47,6 +46,11 @@ router.get('/post/:id', withAuth, async (req, res) => {
         {
           model: Comment,
         },
+        {
+          model: Tag,
+          through: PostTag,
+          as: 'post_tags'
+        },
       ],
     });
 
@@ -54,7 +58,7 @@ router.get('/post/:id', withAuth, async (req, res) => {
     res.render('post', {
       ...post,
       logged_in: req.session.logged_in,
-      logged_id: req.session.user_id
+      logged_id: req.session.user_id,
     });
   } catch (err) {
     res.status(500).json(err);
@@ -72,7 +76,7 @@ router.get('/dashboard', withAuth, async (req, res) => {
 
     res.render('dashboard', {
       ...user,
-      logged_in: true
+      logged_in: true,
     });
   } catch (err) {
     res.status(500).json(err);
@@ -94,10 +98,14 @@ router.get('/post/update/:id', withAuth, async (req, res) => {
       include: [
         {
           model: User,
-          attributes: ['name'],
         },
         {
           model: Comment,
+        },
+        {
+          model: Tag,
+          through: PostTag,
+          as: 'post_tags'
         },
       ],
     });
@@ -106,7 +114,7 @@ router.get('/post/update/:id', withAuth, async (req, res) => {
     res.render('update', {
       ...post,
       logged_in: req.session.logged_in,
-      logged_id: req.session.user_id
+      logged_id: req.session.user_id,
     });
   } catch (err) {
     res.status(500).json(err);

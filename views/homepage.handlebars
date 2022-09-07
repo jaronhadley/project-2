@@ -11,8 +11,7 @@
       <div class="col-md-4 text-right mt-3">
         Created by <a href="/profile/{{post.user.name}}">{{post.user.name}}</a> on {{format_date post.date_created}}
       </div>
+      <p class='card-body'>{{post.contents}}</p>
     </div>
-    <p class="card-body">{{post.contents}}</p>
   </div>
-</div>
 {{/each}}

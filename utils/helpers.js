@@ -22,5 +22,5 @@ module.exports = {
   // allows handlebars to if the session user matches the post or comment user
   same_user: (sess_user, list_user) => {
     return sess_user == list_user;
-  }
+  },
 };
