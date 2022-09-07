@@ -1,5 +1,5 @@
 const router = require('express').Router();
-const { Post, User, Comment, Tag, PostTag } = require('../models');
+const { Post, User, Comment, Tag, PostTag, Vote} = require('../models');
 const withAuth = require('../utils/auth');
 const sequelize = require('../config/connection');
 const { QueryTypes } = require('sequelize');
@@ -8,6 +8,12 @@ router.get('/', async (req, res) => {
   try {
     // Get all posts and JOIN with user data
     const postData = await Post.findAll({
+      attributes: [
+        'id',
+        'title',
+        'contents',
+        [sequelize.literal('(SELECT COUNT(*) FROM vote WHERE post.id = vote.post_id)'), 'vote_count']
+      ],
       include: [
         {
           model: User,
@@ -35,10 +41,55 @@ router.get('/', async (req, res) => {
     res.status(500).json(err);
   }
 });
+// for upvoted posts
+router.get('/recommended', async (req, res) => {
+  try {
+    // Get all posts and JOIN with user data
+    const postData = await Post.findAll({
+      attributes: [
+        'id',
+        'title',
+        'contents',
+        [sequelize.literal('(SELECT COUNT(*) FROM vote WHERE post.id = vote.post_id)'), 'vote_count']
+      ],
+      order: [['vote_count', 'DESC']],
+      include: [
+        {
+          model: User,
+          attributes: ['name'],
+        },
+        {
+          model: Comment,
+        },
+      ],
+    });
+
+    // Serialize data so the template can read it
+    const posts = postData.map((post) => post.get({ plain: true }));
+    posts.forEach((post) => {
+      if (post.contents.length > 450) {
+        post.contents = post.contents.slice(0, 450) + ' ...';
+      }
+    });
+    // Pass serialized data and session flag into template
+    res.render('recommended-posts', {
+      posts,
+      logged_in: req.session.logged_in,
+    });
+  } catch (err) {
+    res.status(500).json(err);
+  }
+});
 // render specific post
 router.get('/post/:id', withAuth, async (req, res) => {
   try {
     const postData = await Post.findByPk(req.params.id, {
+      attributes: [
+        'id',
+        'title',
+        'contents',
+        [sequelize.literal('(SELECT COUNT(*) FROM vote WHERE post.id = vote.post_id)'), 'vote_count']
+      ],
       include: [
         {
           model: User,
@@ -69,7 +120,7 @@ router.get('/dashboard', withAuth, async (req, res) => {
   try {
     const userData = await User.findByPk(req.session.user_id, {
       attributes: { exclude: ['password'] },
-      include: [{ model: Post }, { model: Comment }],
+      include: [{ model: Post }, { model: Comment }] [{ model: Vote}],
     });
 
     const user = userData.get({ plain: true });
@@ -98,6 +149,7 @@ router.get('/post/update/:id', withAuth, async (req, res) => {
       include: [
         {
           model: User,
+          attributes: ['name'],
         },
         {
           model: Comment,

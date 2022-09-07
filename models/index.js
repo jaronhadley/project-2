@@ -1,6 +1,7 @@
 const User = require('./User');
 const Post = require('./Post');
 const Comment = require('./Comment');
+const Vote = require('./Vote');
 const Tag = require('./Tag');
 const PostTag = require('./PostTag');
 
@@ -31,6 +32,22 @@ Comment.belongsTo(Post, {
   foreignKey: 'post_id',
 });
 
+Vote.belongsTo(User, {
+  foreignKey: 'user_id',
+});
+
+Vote.belongsTo(Post, {
+  foreignKey: 'post_id',
+});
+
+User.hasMany(Vote, {
+  foreignKey: 'user_id',
+});
+
+Post.hasMany(Vote, {
+  foreignKey: 'post_id',
+});
+
 Post.belongsToMany(Tag, {
   through: {
     model: PostTag,
@@ -49,4 +66,4 @@ Tag.belongsToMany(Post, {
   onDelete: 'cascade'
 });
 
-module.exports = { User, Post, Comment, Tag, PostTag };
+module.exports = { User, Post, Comment, Tag, PostTag, Vote };
