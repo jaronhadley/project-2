@@ -9,7 +9,7 @@
         </h2>
       </div>
       <div class="col-md-4 text-right mt-3">
-        Created by {{post.user.name}} on {{format_date post.date_created}}
+        Created by <a href="/profile/{{post.user.name}}">{{post.user.name}}</a> on {{format_date post.date_created}}
       </div>
     </div>
     <p class="card-body">{{post.contents}}</p>

@@ -37,6 +37,15 @@ const delButtonHandler = async (event) => {
     }
   }
 };
+// redirect to update user dashboard
+const updateButtonHandler = (event) => {
+  if (event.target.hasAttribute('data-id')) {
+    const id = event.target.getAttribute('data-id');
+    document.location.replace(`/dashboard_update/${id}`)
+  } else {
+    console.log('Error, user ID not found!');
+  }
+};
 
 document
   .querySelector('.new-post-form')
@@ -45,3 +54,6 @@ document
 document
   .querySelector('.post-list')
   .addEventListener('click', delButtonHandler);
+document
+  .querySelector('.update-dashboard')
+  .addEventListener('click', updateButtonHandler);
