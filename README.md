@@ -137,13 +137,21 @@ THEN I am able to view comments but I am prompted to log in again before I can a
 ## Technologies
 
 * [Node.js](https://nodejs.org/en/)
+
 * [MySQL2](https://www.npmjs.com/package/mysql2)
+
 * [Sequelize](https://www.npmjs.com/package/sequelize)
+
 * [Dotenv](https://www.npmjs.com/package/dotenv)
+
 * [Bcrypt](https://www.npmjs.com/package/bcrypt)
+
 * [Express Session](https://www.npmjs.com/package/express-session)
+
 * [Connect Session Sequelize](https://www.npmjs.com/package/connect-session-sequelize)
+
 * [Express Handlebars](https://www.npmjs.com/package/express-handlebars)
+
 * [Lodash](https://www.npmjs.com/package/lodash)
 
 
@@ -161,9 +169,13 @@ npm i
 In the command line: 
 
 * ``mysql -u root -p`` and enter the mysql root user password 
+
 * Add the database with ``source db/schema.sql``
+
 * ``exit`` to exit MYSQL
+
 *  ``npm run seed`` to seed the database. 
+
 * To start the server and the application, run ``npm start``
 
 ## Contributing 
@@ -174,8 +186,12 @@ After submitting a pull request, the changes will be reviewed by a member of the
 
 Built by: 
 [Jaron Hadley](https://github.com/jaronhadley)
+
 [Harrison Small](https://github.com/HankSml)
+
 [Codey Gallup](https://github.com/Codeyg12)
+
 [Erin Voelker](https://github.com/ekellv)
+
 [Taha Chaudry](https://github.com/tahachaudhry)
 
