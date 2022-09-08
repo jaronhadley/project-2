@@ -56,6 +56,7 @@ router.get('/recommended', async (req, res) => {
         'id',
         'title',
         'contents',
+        'date_created',
         [sequelize.literal('(SELECT COUNT(*) FROM vote WHERE post.id = vote.post_id)'), 'vote_count']
       ],
       order: [['vote_count', 'DESC']],
@@ -99,6 +100,7 @@ router.get('/post/:id', withAuth, async (req, res) => {
         'id',
         'title',
         'contents',
+        'date_created',
         [sequelize.literal('(SELECT COUNT(*) FROM vote WHERE post.id = vote.post_id)'), 'vote_count']
       ],
       include: [
