@@ -1,22 +1,22 @@
-<div class="row">
-  <div class="col-auto">
-    <h2>Welcome, {{name}}!</h2>
-    <button type="menu" class="btn btn-primary update-dashboard" data-id="{{id}}">Update Profile</button>
+<div class="welcome-div">
+  <div class="col-md-8 profile-header">
+    <h2>Welcome, {{name}}!
+      <button type="menu" class="btn btn-primary update-dashboard" data-id="{{id}}">Update Profile</button>
+    </h2>
   </div>
-  <div>
+  <div class="personal-div">
     <div class="profile-picture">
-    {{#if picture}}
-    <img src="{{picture}}" alt="profile picture">
-    {{else}}
-    <img 
-    src="https://media.istockphoto.com/vectors/thumbnail-image-vector-graphic-vector-id1147544807?k=20&m=1147544807&s=612x612&w=0&h=pBhz1dkwsCMq37Udtp9sfxbjaMl27JUapoyYpQm0anc=",
-    alt="profile picture">
-    {{/if}}
-    </div>
-    <div class="biography">
-      <p>{{biography}}</p>
+      {{#if picture}}
+      <img src="{{picture}}" alt="profile picture" class="dashboard-profile-picture">
+      {{else}}
+      <img 
+      src="https://media.istockphoto.com/vectors/thumbnail-image-vector-graphic-vector-id1147544807?k=20&m=1147544807&s=612x612&w=0&h=pBhz1dkwsCMq37Udtp9sfxbjaMl27JUapoyYpQm0anc=",
+      alt="profile picture">
+      {{/if}}
+      <p class="dashboard-biography">{{biography}}</p>
     </div>
   </div>
+  <div class="bottom-border-div"></div>
 </div>
 
 <div class="row mt-4">
