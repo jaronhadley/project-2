@@ -9,10 +9,10 @@ This app is a fully functional blogging platform that has a rich user experience
 
 ## Contents
 1. [About](#about)
-      1. [User Story](#user%20story)
-      2. [Acceptance Criteria](#acceptance%20criteria)
-      3. [Visuals](#visuals)
-      4. [Technologies](#technologies)
+      * [User Story](#user%20story)
+      * [Acceptance Criteria](#acceptance%20criteria)
+      * [Visuals](#visuals)
+      * [Technologies](#technologies)
 2. [Installation](#installation)
 3. [Usage](#usage)
 4. [Contributing](#contributing)
@@ -24,18 +24,18 @@ Building upon a previous assignment, we set out to enrich the UI as well as add 
 
 ## User Story
 
-``
+```
 AS a subject matter expert
 
 I WANT a blogging platform
 
 SO THAT I can publish articles, curate followers, follow others with similar interests, collaborate on ideas, and find content relevant to me
 
-``
+```
 
 ## Acceptance Criteria 
 
-``
+```
 GIVEN a CMS-style blog site
 
 WHEN I visit the site for the first time
@@ -125,13 +125,14 @@ THEN I am signed out of the site
 WHEN I am idle on the site for more than a set time
 
 THEN I am able to view comments but I am prompted to log in again before I can add, update, or delete comments
-``
+```
 
 ## Visuals: 
 
-![Homepage Screenshot](assets\images\project-2-screenshot.png)
-![Dashboard Screenshot](assets\images\dashboard-screenshot.png)
-![Profiles Screenshot](assets\images\profile-screenshot.png)
+![project-2-screenshot](https://user-images.githubusercontent.com/103372188/189008075-fb632f8a-d993-4ac9-83f9-cc69569b8e00.png)
+![profile-screenshot](https://user-images.githubusercontent.com/103372188/189008088-ad6b7118-4771-4a58-b25c-0a1bf9532e9b.png)
+![dashboard-screenshot](https://user-images.githubusercontent.com/103372188/189008093-8ff04812-4cb7-4144-98f7-e821cf747ba7.png)
+
 
 ## Technologies
 
