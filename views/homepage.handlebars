@@ -11,6 +11,7 @@
       <div class="col-md-4 text-right mt-3">
         Created by <a href="/profile/{{post.user.name}}">{{post.user.name}}</a> on {{format_date post.date_created}}
       </div>
+    </div>
       <p class='card-body'>{{post.contents}}</p>
       <div class='row card-footer'>
         <div class='col-auto ml-4'> 
@@ -20,6 +21,6 @@
           <a href="/post/{{id}}">{{comments.length}} {{format_plural "comment" comments.length}}</a>
         </div>
       </div>
-    </div>
   </div>
+</div>
 {{/each}}

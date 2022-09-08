@@ -1,96 +1,180 @@
-# Module 14 Mini-Project: Crowdfunding App
+# Project 2: Blogging Platform
 
-In this mini-project, you will work with a group to build a full-stack crowdfunding app using Node.js, Express.js, Sequelize, Handlebars.js, and MVC architecture. (DELETE)
+## Description 
 
-## User Stories
+This app is a fully functional blogging platform that has a rich user experience and encourages user interaction.
 
-* As a user, I want to see a list of current projects seeking funding.
 
-* As a user, I want to be able to create an account.
+[A version of the deployed website can be viewed here.]()
 
-* As a registered user, I want to post my own projects to ask for funding.
+## Contents
+1. [About](#about)
+      1. [User Story](#user%20story)
+      2. [Acceptance Criteria](#acceptance%20criteria)
+      3. [Visuals](#visuals)
+      4. [Technologies](#technologies)
+2. [Installation](#installation)
+3. [Usage](#usage)
+4. [Contributing](#contributing)
+5. [Authors and Acknowledgements](#authors%20and%20acknowledgements)
 
-### Acceptance Criteria
+## About
 
-* It's done when the `/` homepage route renders a list of all projects from the database.
+Building upon a previous assignment, we set out to enrich the UI as well as add features users would expect from a blogging website- friending other users, tagging their posts for other users to find specific content, creating profiles and upvoting posts to boost their popularity. Through collaboration and clear breakdowns in task assignments, we were able to put together a blogging platform that closely follows what is available on the market today. 
 
-* It's done when the `/project/:id` route renders an individual project's details based on the route parameter id.
+## User Story
 
-* It's done when the `/login` route renders a form to log in and a form to create a new account.
+``
+AS a subject matter expert
 
-* It's done when an existing user can enter their credentials on the login page to create a session on the server.
+I WANT a blogging platform
 
-* It's done when a new user can create an account on the login page and then be immediately logged in with a session.
+SO THAT I can publish articles, curate followers, follow others with similar interests, collaborate on ideas, and find content relevant to me
 
-* It's done when the `/profile` route renders the logged-in user's projects and a form to create a new project.
+``
 
-* It's done when only a logged in user can visit the `/profile` route.
+## Acceptance Criteria 
 
-* It's done when a logged in user is redirected to `/profile` when they try to visit `/login` again.
+``
+GIVEN a CMS-style blog site
 
-* It's done when a user on the profile page can use the form to create a new project in the database.
+WHEN I visit the site for the first time
 
-* It's done when a user on the profile page can select a "Delete" button to remove their project from the database.
+THEN I am presented with the homepage, which includes existing blog posts if any have been posted; navigation links for the homepage and the dashboard; and the option to log in
 
-* It's done when a logged-in user can select a "Logout" button to remove their session.
+WHEN I click on the homepage option
 
-* It's done when the session for a logged-in user expires after a set time.
+THEN I am taken to the homepage
 
-* It's done when the API routes to create and delete posts are protected from non logged-in users.
+WHEN I click on any other links in the navigation
 
-* It's done when the code is organized using MVC architecture.
+THEN I am prompted to either sign up or sign in
 
-* It's done when the views are rendered with Handlebars.js templates.
+WHEN I choose to sign up
 
-## Specifications 
+THEN I am prompted to create a username and password
 
-* The database models have the following fields and associations:
+WHEN I click on the sign-up button
 
-  * `User`
+THEN my user credentials are saved and I am logged into the site
 
-    * `id`: primary key
+WHEN I revisit the site at a later time and choose to sign in
 
-    * `name`
+THEN I am prompted to enter my username and password
 
-    * `email`
+WHEN I am signed in to the site
 
-    * `password`
+THEN I see navigation links for the homepage, the dashboard, recommended pages, my profile page and the option to log out
 
-  * `Project`
+WHEN I click on the homepage option in the navigation
 
-    * `id`: primary key
+THEN I am taken to the homepage and presented with existing blog posts that include the post title, number of comments and upvotes, and the date created
 
-    * `name`
+WHEN I click on an existing blog post
 
-    * `description`
+THEN I am presented with the post title, contents, post tags, post creator’s username, and date created for that post and have the option to leave a comment or an upvote
 
-    * `date_created`
+WHEN I enter a comment and click on the submit button while signed in
 
-    * `needed_funding`
+THEN the comment is saved and the post is updated to display the comment, the comment creator’s username, and the date created
 
-    * `user_id`: foreign key that references `User.id`
+WHEN I click the upvote button
 
-  * Users have many projects, and projects belong to a user.
+THEN the upvote is saved to the particular post
 
-    * If a user is deleted, all associated projects are also deleted.
+WHEN I click on the link to the recommended posts
 
----
+THEN I am taken to a list of posts sorted in descending order by number of upvotes
 
-## 💡 Hints
+WHEN I click on the dashboard option in the navigation
 
-* What tools can you use to test the existing API routes if you don't yet have a front end?
+THEN I am taken to the dashboard and presented with any blog posts I have already created and the option to add a new blog post
 
-* Where would you place the client-side JavaScript for capturing form data?
+WHEN I click on the button to add a new blog post
 
-* How can middleware help protect routes from non logged-in users?
+THEN I am prompted to enter both a title and contents for my blog post
 
-* How can Handlebars.js helpers (both built-in and custom) be used to render the desired results?
+WHEN I am done entering my title and contents for my blog post
 
-## 🏆 Bonus
+THEN I can choose different post tags to help identify the content of my post
 
-If you have completed this activity, work through the following challenge with your partner to further your knowledge:
+WHEN I click on the button to create a new blog post
 
-* Add an `/edit/:id` route for logged in users to update their projects' details. Then deploy the app to Heroku!
+THEN the title, contents and any chosen tags of my post are saved and I am taken back to an updated dashboard with my new blog post
 
----
-© 2022 Trilogy Education Services, LLC, a 2U, Inc. brand. Confidential and Proprietary. All Rights Reserved.
+WHEN I click on one of my existing posts in the dashboard
+
+THEN I am able to delete or update my post and taken back to an updated dashboard
+
+WHEN I click on update profile in my dashboard
+
+THEN I can update my profile picture or biography
+
+WHEN I update my profile picture or biography
+
+THEN both are saved for myself or other users to view
+
+WHEN I click on another user's name
+
+THEN I can view their profile picture, biography and created blog posts
+
+WHEN I click on the logout option in the navigation
+
+THEN I am signed out of the site
+
+WHEN I am idle on the site for more than a set time
+
+THEN I am able to view comments but I am prompted to log in again before I can add, update, or delete comments
+``
+
+## Visuals: 
+
+![Homepage Screenshot](assets\images\project-2-screenshot.png)
+![Dashboard Screenshot](assets\images\dashboard-screenshot.png)
+![Profiles Screenshot](assets\images\profile-screenshot.png)
+
+## Technologies
+
+* [Node.js](https://nodejs.org/en/)
+* [MySQL2](https://www.npmjs.com/package/mysql2)
+* [Sequelize](https://www.npmjs.com/package/sequelize)
+* [Dotenv](https://www.npmjs.com/package/dotenv)
+* [Bcrypt](https://www.npmjs.com/package/bcrypt)
+* [Express Session](https://www.npmjs.com/package/express-session)
+* [Connect Session Sequelize](https://www.npmjs.com/package/connect-session-sequelize)
+* [Express Handlebars](https://www.npmjs.com/package/express-handlebars)
+* [Lodash](https://www.npmjs.com/package/lodash)
+
+
+## Installation 
+
+Please run the following dependencies to install the application: 
+
+`
+npm i
+`
+
+## Usage 
+
+* clone repo and instal dependencies
+In the command line: 
+
+* ``mysql -u root -p`` and enter the mysql root user password 
+* Add the database with ``source db/schema.sql``
+* ``exit`` to exit MYSQL
+*  ``npm run seed`` to seed the database. 
+* To start the server and the application, run ``npm start``
+
+## Contributing 
+
+After submitting a pull request, the changes will be reviewed by a member of the team and if approved, merged with the code database. 
+
+## Authors and Acknowledgements
+
+Built by: 
+[Jaron Hadley](https://github.com/jaronhadley)
+[Harrison Small](https://github.com/HankSml)
+[Codey Gallup](https://github.com/Codeyg12)
+[Erin Voelker](https://github.com/ekellv)
+[Taha Chaudry](https://github.com/tahachaudhry)
+
