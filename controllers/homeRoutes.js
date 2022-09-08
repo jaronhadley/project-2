@@ -22,6 +22,11 @@ router.get('/', async (req, res) => {
         {
           model: Comment,
         },
+        {
+          model: Tag,
+          through: PostTag,
+          as: 'post_tags'
+        },
       ],
     });
 
@@ -60,6 +65,11 @@ router.get('/recommended', async (req, res) => {
         },
         {
           model: Comment,
+        },
+        {
+          model: Tag,
+          through: PostTag,
+          as: 'post_tags'
         },
       ],
     });
