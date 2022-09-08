@@ -18,6 +18,37 @@ header,
   text-decoration: underline;
 }
 
+.welcome-div {
+  min-width: 100%;
+}
+
+.personal-div {
+  justify-content: left;
+}
+
+.profile-picture {
+  overflow: hidden;
+}
+
+.profile-picture > img {
+  float: left;
+  max-height: 400px;
+  max-width: 200px;
+  border: 3px solid black;
+  margin-right: 10px;
+}
+
+.dashboard-biography {
+  text-align: justify;
+  text-indent: 1em;
+}
+
+.bottom-border-div {
+  width: 80%;
+  align-self: center;
+  border: 1px solid black;
+}
+
 .dollar-amount {
   color: #056605;
   font-weight: bold;
