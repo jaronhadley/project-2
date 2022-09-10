@@ -1,5 +1,13 @@
 const router = require('express').Router();
-const { Post, User, Comment, Tag, PostTag, Vote} = require('../models');
+const {
+  Post,
+  User,
+  Comment,
+  Tag,
+  PostTag,
+  Vote,
+  Follower,
+} = require('../models');
 const withAuth = require('../utils/auth');
 const sequelize = require('../config/connection');
 
@@ -12,7 +20,12 @@ router.get('/', async (req, res) => {
         'title',
         'contents',
         'date_created',
-        [sequelize.literal('(SELECT COUNT(*) FROM vote WHERE post.id = vote.post_id)'), 'vote_count']
+        [
+          sequelize.literal(
+            '(SELECT COUNT(*) FROM vote WHERE post.id = vote.post_id)'
+          ),
+          'vote_count',
+        ],
       ],
       include: [
         {
@@ -25,7 +38,7 @@ router.get('/', async (req, res) => {
         {
           model: Tag,
           through: PostTag,
-          as: 'post_tags'
+          as: 'post_tags',
         },
       ],
     });
@@ -56,7 +69,12 @@ router.get('/recommended', async (req, res) => {
         'title',
         'contents',
         'date_created',
-        [sequelize.literal('(SELECT COUNT(*) FROM vote WHERE post.id = vote.post_id)'), 'vote_count']
+        [
+          sequelize.literal(
+            '(SELECT COUNT(*) FROM vote WHERE post.id = vote.post_id)'
+          ),
+          'vote_count',
+        ],
       ],
       order: [['vote_count', 'DESC']],
       include: [
@@ -70,7 +88,7 @@ router.get('/recommended', async (req, res) => {
         {
           model: Tag,
           through: PostTag,
-          as: 'post_tags'
+          as: 'post_tags',
         },
       ],
     });
@@ -100,7 +118,12 @@ router.get('/post/:id', withAuth, async (req, res) => {
         'title',
         'contents',
         'date_created',
-        [sequelize.literal('(SELECT COUNT(*) FROM vote WHERE post.id = vote.post_id)'), 'vote_count']
+        [
+          sequelize.literal(
+            '(SELECT COUNT(*) FROM vote WHERE post.id = vote.post_id)'
+          ),
+          'vote_count',
+        ],
       ],
       include: [
         {
@@ -112,7 +135,7 @@ router.get('/post/:id', withAuth, async (req, res) => {
         {
           model: Tag,
           through: PostTag,
-          as: 'post_tags'
+          as: 'post_tags',
         },
       ],
     });
@@ -133,11 +156,11 @@ router.get('/dashboard', withAuth, async (req, res) => {
   try {
     const userData = await User.findByPk(req.session.user_id, {
       attributes: { exclude: ['password'] },
-      include: [{ model: Post }, { model: Comment }, { model: Vote}],
+      include: [{ model: Post }, { model: Comment }, { model: Vote }],
     });
 
     const user = userData.get({ plain: true });
-console.log("USEER:", user)
+
     res.render('dashboard', {
       ...user,
       logged_in: true,
@@ -170,7 +193,7 @@ router.get('/post/update/:id', withAuth, async (req, res) => {
         {
           model: Tag,
           through: PostTag,
-          as: 'post_tags'
+          as: 'post_tags',
         },
       ],
     });
@@ -188,46 +211,58 @@ router.get('/post/update/:id', withAuth, async (req, res) => {
 // render profile page of specific user
 router.get('/profile/:name', withAuth, async (req, res) => {
   try {
-    const userData = await User.findOne(
-      {
-        where: {name: req.params.name},
-        attributes: { exclude: ['password']},
-        include: [
-          {
-            model: Post,
-          },
-          {
-            model: Comment,
-          },
-        ],
+    const userData = await User.findOne({
+      where: { name: req.params.name },
+      attributes: { exclude: ['password'] },
+      include: [
+        {
+          model: Post,
+        },
+        {
+          model: Comment,
+        },
+      ],
     });
 
     const user = userData.get({ plain: true });
-    
+
     res.render('profile', {
       ...user,
       logged_in: req.session.logged_in,
-      logged_id: req.session.user_id
+      logged_id: req.session.user_id,
     });
   } catch (err) {
     res.status(500).json(err);
   }
 });
-// render user's personal profile update page 
+// render user's personal profile update page
 router.get('/dashboard_update/:id', withAuth, async (req, res) => {
   try {
     const userData = await User.findByPk(req.params.id, {
-      attributes: { exclude: ['password']},
+      attributes: { exclude: ['password'] },
     });
 
     const user = userData.get({ plain: true });
     res.render('dashboard_update', {
       ...user,
       logged_in: req.session.logged_in,
-      logged_id: req.session.user_id
+      logged_id: req.session.user_id,
     });
   } catch (err) {
     res.status(500).json(err);
+  }
+});
+
+router.post('/profile/:name/follow', withAuth, async (req, res) => {
+  try {
+    const followerData = await Follower.create({
+      ...req.body,
+      user_id: req.session.user_id,
+    });
+
+    res.status(200).json(followerData);
+  } catch (err) {
+    res.status(400).json(err);
   }
 });
 
