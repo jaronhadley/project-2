@@ -2,10 +2,18 @@
 const updateProfile = async (event) => {
     event.preventDefault();
     
-    console.log('hello!');
-    const picture = document.querySelector('.profile-picture').value.trim();
-    const biography = document.querySelector('.biography').value.trim();
+    const pictureInput = document.querySelector('.profile-picture');
+    const biographyInput = document.querySelector('.biography');
+    let picture = pictureInput.value.trim();
+    let biography = biographyInput.value.trim();
     const userID = window.location.pathname.split('/')[2];
+
+    if (picture === "") {
+        picture = pictureInput.getAttribute('data-current');
+    }
+    if (biography === "") {
+        biography = biographyInput.getAttribute('data-current');
+    }
     const response = await fetch(`/api/users/${userID}`, {
         method: 'PUT',
         body: JSON.stringify({ picture, biography }),
