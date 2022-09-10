@@ -4,6 +4,7 @@ const Comment = require('./Comment');
 const Vote = require('./Vote');
 const Tag = require('./Tag');
 const PostTag = require('./PostTag');
+const Follower = require('./Follower');
 
 User.hasMany(Post, {
   foreignKey: 'user_id',
@@ -51,19 +52,29 @@ Post.hasMany(Vote, {
 Post.belongsToMany(Tag, {
   through: {
     model: PostTag,
-    unique: false
+    unique: false,
   },
   as: 'post_tags',
-  onDelete: 'cascade'
+  onDelete: 'cascade',
 });
 
 Tag.belongsToMany(Post, {
   through: {
     model: PostTag,
-    unique: false
+    unique: false,
   },
   as: 'tag_post',
-  onDelete: 'cascade'
+  onDelete: 'cascade',
 });
 
-module.exports = { User, Post, Comment, Tag, PostTag, Vote };
+Follower.belongsTo(User, {
+  as: 'following',
+  foreignKey: 'follower_id',
+});
+
+Follower.belongsTo(User, {
+  as: 'follower',
+  foreignKey: 'user_id',
+});
+
+module.exports = { User, Post, Comment, Tag, PostTag, Vote, Follower };

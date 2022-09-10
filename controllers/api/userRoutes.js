@@ -62,13 +62,11 @@ router.post('/logout', (req, res) => {
 // update profile info
 router.put('/:id', withAuth, async (req, res) => {
   try {
-    const profileData = await User.update(req.body,
-      {
-        where: {
-          id: req.session.user_id
-        },
-      }
-    );
+    const profileData = await User.update(req.body, {
+      where: {
+        id: req.session.user_id,
+      },
+    });
 
     if (!profileData) {
       res.status(404).json({ message: 'No profile found with this id!' });
