@@ -2,7 +2,6 @@ const router = require('express').Router();
 const { Post, User, Comment, Tag, PostTag, Vote} = require('../models');
 const withAuth = require('../utils/auth');
 const sequelize = require('../config/connection');
-const { QueryTypes } = require('sequelize');
 
 router.get('/', async (req, res) => {
   try {
@@ -119,6 +118,7 @@ router.get('/post/:id', withAuth, async (req, res) => {
     });
 
     const post = postData.get({ plain: true });
+
     res.render('post', {
       ...post,
       logged_in: req.session.logged_in,
@@ -133,11 +133,11 @@ router.get('/dashboard', withAuth, async (req, res) => {
   try {
     const userData = await User.findByPk(req.session.user_id, {
       attributes: { exclude: ['password'] },
-      include: [{ model: Post }, { model: Comment }] [{ model: Vote}],
+      include: [{ model: Post }, { model: Comment }, { model: Vote}],
     });
 
     const user = userData.get({ plain: true });
-
+console.log("USEER:", user)
     res.render('dashboard', {
       ...user,
       logged_in: true,
@@ -203,7 +203,7 @@ router.get('/profile/:name', withAuth, async (req, res) => {
     });
 
     const user = userData.get({ plain: true });
-    console.log(user);
+    
     res.render('profile', {
       ...user,
       logged_in: req.session.logged_in,
