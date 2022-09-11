@@ -2,7 +2,9 @@
 <div class="welcome-div">
   <div class="col-md-8 profile-header">
     <h2>Welcome to {{name}}'s Profile!
+      <button class="btn btn-primary follow-btn" data-id="{{id}}" data-iid="{{name}}">Follow</button>
     </h2>
+    
   </div>
   <div class="personal-div">
     <div class="profile-picture">
@@ -31,3 +33,5 @@
     </div>
     {{/if}}
 </div>
+
+<script src="/js/follow.js"></script>
