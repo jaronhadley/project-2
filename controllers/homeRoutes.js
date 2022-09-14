@@ -156,7 +156,7 @@ router.get('/dashboard', withAuth, async (req, res) => {
   try {
     const userData = await User.findByPk(req.session.user_id, {
       attributes: { exclude: ['password'] },
-      include: [{ model: Post }, { model: Comment }, { model: Vote }],
+      include: [{ model: Post }, { model: Comment }, { model: Vote}],
     });
 
     const user = userData.get({ plain: true });
@@ -247,6 +247,33 @@ router.get('/dashboard_update/:id', withAuth, async (req, res) => {
       ...user,
       logged_in: req.session.logged_in,
       logged_id: req.session.user_id,
+    });
+  } catch (err) {
+    res.status(500).json(err);
+  }
+});
+
+
+router.get('/following', withAuth, async (req, res) => {
+  try {
+    const followList = await Follower.findAll({
+      where: {
+        user_id: req.session.user_id,
+      },
+      include: [
+        {
+          model: User,
+          as: 'following',
+        }
+      ],
+    });
+    const follow = followList.map((followers) =>
+      followers.get({ plain: true })
+    );
+    console.log('FollowWWWW', follow);
+    res.render('follow', {
+      follow,
+      logged_in: true,
     });
   } catch (err) {
     res.status(500).json(err);

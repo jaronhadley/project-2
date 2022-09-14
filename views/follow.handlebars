@@ -1,2 +1,8 @@
-<h2>{{}}</h2>
-<p>{{}}</p>
+<div class="text-center">
+<h1 class="title mb-3">Followers</h1>
+{{#each follow}}
+<p id="follow"><a href="/profile/{{following.name}}" class="text-primary">{{following.name}}</a></p>
+<br>
+<br>
+{{/each}}
+</div>
