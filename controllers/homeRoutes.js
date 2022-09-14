@@ -221,11 +221,12 @@ router.get('/profile/:name', withAuth, async (req, res) => {
         {
           model: Comment,
         },
+        
       ],
     });
 
     const user = userData.get({ plain: true });
-
+console.log(user)
     res.render('profile', {
       ...user,
       logged_in: req.session.logged_in,
@@ -270,7 +271,7 @@ router.get('/following', withAuth, async (req, res) => {
     const follow = followList.map((followers) =>
       followers.get({ plain: true })
     );
-    console.log('FollowWWWW', follow);
+   
     res.render('follow', {
       follow,
       logged_in: true,
