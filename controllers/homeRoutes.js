@@ -253,6 +253,33 @@ router.get('/dashboard_update/:id', withAuth, async (req, res) => {
   }
 });
 
+
+router.get('/following', withAuth, async (req, res) => {
+  try {
+    const followList = await Follower.findAll({
+      where: {
+        user_id: req.session.user_id,
+      },
+      include: [
+        {
+          model: User,
+          as: 'following',
+        }
+      ],
+    });
+    const follow = followList.map((followers) =>
+      followers.get({ plain: true })
+    );
+    console.log('FollowWWWW', follow);
+    res.render('follow', {
+      follow,
+      logged_in: true,
+    });
+  } catch (err) {
+    res.status(500).json(err);
+  }
+});
+
 router.post('/profile/:name/follow', withAuth, async (req, res) => {
   try {
     const followerData = await Follower.create({
